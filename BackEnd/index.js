@@ -5,7 +5,13 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const { executeGraphQL } = require('./dgraph');
-const authMiddleware = require('./auth'); // <-- ADDED
+const authMiddleware = require('./auth');
+const teamsRouter = require('./routes/teams');
+const judgeRouter = require('./routes/judge');
+const userRouter = require('./routes/user');
+const roundRouter = require('./routes/Round');
+const scoreRouter = require('./routes/score');
+
 
 // 2. Initialize the Express application
 const app = express();
@@ -22,7 +28,6 @@ app.get('/', (req, res) => {
 
 // --- AUTHENTICATION ROUTES ---
 app.post('/register', async (req, res) => {
-  // ... (code from the previous step is unchanged)
   const { name, email, password, role } = req.body;
   if (!name || !email || !password || !role) {
     return res.status(400).json({ message: 'All fields are required.' });
@@ -46,7 +51,6 @@ app.post('/register', async (req, res) => {
 });
 
 app.post('/login', async (req, res) => {
-  // ... (code from the previous step is unchanged)
   const { email, password } = req.body;
   if (!email || !password) {
     return res.status(400).json({ message: 'Email and password are required.' });
@@ -80,15 +84,22 @@ app.post('/login', async (req, res) => {
 });
 
 
-// --- NEW PROTECTED ROUTE ---
+// --- PROTECTED ROUTE for user data ---
 app.get('/api/me', authMiddleware, (req, res) => {
-  // If authMiddleware succeeds, req.user will contain the user's id and role
   res.json({
     message: 'User data fetched successfully.',
     user: req.user
   });
 });
-// --- END OF NEW PROTECTED ROUTE ---
+
+
+// --- USE THE API ROUTERS ---
+app.use('/api/teams', teamsRouter); // Teams routes
+app.use('/api/judges', judgeRouter); // Judges routes
+app.use('/api/users', userRouter); // Users routes
+app.use('/api/rounds', roundRouter); // Rounds routes
+app.use('/api/scores', scoreRouter); // Scores routes
+
 
 
 // Start the server
