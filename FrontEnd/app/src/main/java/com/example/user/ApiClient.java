@@ -66,5 +66,24 @@ public class ApiClient {
         return httpClient.newCall(request);
     }
 
-    // You can add other methods like put(), delete() here following the same pattern.
+    /**
+     * Makes a DELETE request to a specified endpoint.
+     * Automatically adds the auth token.
+     * @param endpoint e.g., "teams/0x123"
+     * @return A Call object ready to be enqueued.
+     */
+    public okhttp3.Call delete(String endpoint) {
+        Request.Builder requestBuilder = new Request.Builder()
+                .url(BASE_URL + endpoint)
+                .delete();
+
+        String token = sessionManager.getAuthToken();
+        if (token != null) {
+            requestBuilder.addHeader("x-auth-token", token);
+        }
+
+        Request request = requestBuilder.build();
+        return httpClient.newCall(request);
+    }
 }
+

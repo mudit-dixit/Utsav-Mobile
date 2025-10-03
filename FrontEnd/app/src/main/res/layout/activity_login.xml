@@ -4,21 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     android:padding="24dp"
     tools:context=".LoginActivity">
 
-    <TextView
-        android:id="@+id/textViewLogo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="UTSAV"
-        android:textSize="34sp"
-        android:textStyle="bold"
+    <!-- Utsav Logo -->
+    <!-- Make sure to add your 'utsav_logo' drawable to the res/drawable folder -->
+    <ImageView
+        android:id="@+id/logoImageView"
+        android:layout_width="270dp"
+        android:layout_height="194dp"
+        android:contentDescription="@string/app_name"
+        android:src="@mipmap/ic_launcher"
         app:layout_constraintBottom_toTopOf="@+id/emailInputLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.6" />
+        app:layout_constraintVertical_bias="0.3" />
 
     <!-- Email Input Field -->
     <com.google.android.material.textfield.TextInputLayout
@@ -48,11 +50,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:hint="Password"
-        app:passwordToggleEnabled="true"
         app:layout_constraintBottom_toTopOf="@+id/loginButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailInputLayout">
+        app:layout_constraintTop_toBottomOf="@+id/emailInputLayout"
+        app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/passwordEditText"
@@ -67,13 +69,28 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
+        android:backgroundTint="#FF5722"
         android:padding="14dp"
         android:text="Login"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:cornerRadius="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/viewLeaderboardButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passwordInputLayout" />
+
+    <!-- View Leaderboard Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/viewLeaderboardButton"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="View Leaderboard"
+        android:textColor="#FF5722"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginButton" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -85,7 +102,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible"/>
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

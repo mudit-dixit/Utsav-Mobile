@@ -9,8 +9,8 @@ const { executeGraphQL } = require('../dgraph');
  * @desc    Get all teams
  * @access  Private
  */
+//router.get('/', authMiddleware, async (req, res) => {
 router.get('/', async (req, res) => {
-// router.get('/', authMiddleware, async (req, res) => {
   try {
     const query = `
       query GetTeams {
@@ -42,7 +42,7 @@ router.get('/:id', authMiddleware, async (req, res) => {
   try {
     const query = `
       query GetTeamByID($id: ID!) {
-        queryTeam(filter: { id: { eq: $id } }) {
+        queryTeam(filter: { id: [$id] }) {
           id
           name
           college
@@ -107,8 +107,8 @@ router.put('/:id', authMiddleware, adminMiddleware, async (req, res) => {
   try {
     const { name, college, contactName, contactEmail, contactPhone, members } = req.body;
     const mutation = `
-      mutation UpdateTeam($filter: TeamFilter!, $set: UpdateTeamInput!) {
-        updateTeam(filter: $filter, set: $set) {
+      mutation UpdateTeam($input: UpdateTeamInput!) {
+        updateTeam(input: $input) {
           team {
             id
             name
@@ -119,8 +119,10 @@ router.put('/:id', authMiddleware, adminMiddleware, async (req, res) => {
       }
     `;
     const variables = {
-      filter: { id: { eq: req.params.id } },
-      set: { name, college, contactName, contactEmail, contactPhone, members }
+      input: {
+        filter: { id: [req.params.id] },
+        set: { name, college, contactName, contactEmail, contactPhone, members }
+      }
     };
     const data = await executeGraphQL(mutation, variables);
     if (!data.updateTeam || data.updateTeam.team.length === 0) {
@@ -143,13 +145,20 @@ router.delete('/:id', authMiddleware, adminMiddleware, async (req, res) => {
     const mutation = `
       mutation DeleteTeam($filter: TeamFilter!) {
         deleteTeam(filter: $filter) {
-          msg: numUids
+          numUids
         }
       }
     `;
-    const variables = { filter: { id: { eq: req.params.id } } };
+    // --- THIS IS THE FIX ---
+    // The filter for delete mutations expects an array of IDs.
+    const variables = {
+      filter: { id: [req.params.id] }
+    };
+    // --- END OF FIX ---
+
     const data = await executeGraphQL(mutation, variables);
-    if (data.deleteTeam.msg === 0) {
+
+    if (data.deleteTeam.numUids === 0) {
       return res.status(404).json({ msg: 'Team not found or already deleted' });
     }
     res.json({ msg: 'Team deleted successfully' });
@@ -160,3 +169,4 @@ router.delete('/:id', authMiddleware, adminMiddleware, async (req, res) => {
 });
 
 module.exports = router;
+

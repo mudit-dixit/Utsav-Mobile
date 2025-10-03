@@ -108,12 +108,17 @@ public class LoginActivity extends AppCompatActivity {
                     loginButton.setEnabled(true);
                     Toast.makeText(LoginActivity.this, "Login Successful!", Toast.LENGTH_SHORT).show();
 
-                    // Navigate to the main dashboard
-                    // Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
-                    // startActivity(intent);
-                    // finish(); // Close the login activity
+                    // --- NAVIGATION LOGIC ---
+                    // Create an Intent to start MainActivity
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    // Start the activity
+                    startActivity(intent);
+                    // Close the LoginActivity so the user can't come back to it
+                    finish();
+                    // --- END OF NAVIGATION LOGIC ---
                 });
             }
         });
     }
 }
+
