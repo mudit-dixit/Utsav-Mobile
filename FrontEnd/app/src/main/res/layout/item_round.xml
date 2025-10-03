@@ -1,0 +1,89 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:elevation="4dp"
+    android:padding="12dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Top Row: Round Name + Icons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/text_round_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Dance With Us"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#000"/>
+
+            <!-- Edit Icon -->
+            <ImageView
+                android:id="@+id/icon_edit_round"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@android:drawable/ic_menu_edit"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_marginEnd="16dp"
+                android:contentDescription="Edit Round"/>
+
+            <!-- Delete Icon -->
+            <ImageView
+                android:id="@+id/icon_delete_round"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@android:drawable/ic_menu_delete"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:contentDescription="Delete Round"/>
+        </LinearLayout>
+
+        <!-- Bottom Row: Buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="12dp">
+
+            <Button
+                android:id="@+id/button_start_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Start"
+                android:backgroundTint="#FF9800"
+                android:textColor="#FFF"
+                android:layout_marginEnd="8dp"/>
+
+            <Button
+                android:id="@+id/button_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Score"
+                android:backgroundTint="#FF9800"
+                android:textColor="#FFF"
+                android:layout_marginEnd="8dp"/>
+
+            <Button
+                android:id="@+id/button_register"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Register"
+                android:backgroundTint="#FF9800"
+                android:textColor="#FFF"/>
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

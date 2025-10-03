@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="deleteBtn" type="id" />
+    <item name="editBtn" type="id" />
+    <item name="nav_judges" type="id" />
+    <item name="nav_user" type="id" />
+    <item name="nav_teams" type="id" />
+    <item name="nav_rounds" type="id" />
+    <item name="nav_leaderboard" type="id" />
+    <item name="text_user_name" type="id" />
+    <item name="text_user_email" type="id" />
+    <item name="button_edit_user" type="id" />
+    <item name="button_delete_user" type="id" />
+    <item name="icon_add_user" type="id" />
+    <item name="icon_delete_user" type="id" />
+    <item name="text_team_name" type="id" />
+    <item name="text_team_members" type="id" />
+    <item name="icon_add_team" type="id" />
+    <item name="icon_delete_team" type="id" />
+    <item name="team_name" type="id" />
+    <item name="team_members" type="id" />
+    <item name="recycler_view_judges" type="id" />
+    <item name="btn_start_score" type="id" />
+    <item name="btn_register" type="id" />
+    <item name="recycler_view_teams" type="id" />
+    <item name="icon_add_judge" type="id" />
+</resources>

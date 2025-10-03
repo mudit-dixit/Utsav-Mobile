@@ -9,7 +9,8 @@ const { executeGraphQL } = require('../dgraph');
  * @desc    Create a new judge
  * @access  Private (Admin)
  */
-router.post('/', authMiddleware, adminMiddleware, async (req, res) => {
+router.post('/', async (req, res) => {
+// router.post('/', authMiddleware, adminMiddleware, async (req, res) => {
   try {
     const { name, email, contactNumber } = req.body;
 
@@ -43,7 +44,8 @@ router.post('/', authMiddleware, adminMiddleware, async (req, res) => {
  * @desc    Get all judges
  * @access  Private
  */
-router.get('/', authMiddleware, async (req, res) => {
+router.get('/', async (req, res) => {
+// router.get('/', authMiddleware, async (req, res) => {
   try {
     const query = `
       query GetJudges {

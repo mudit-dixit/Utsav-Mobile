@@ -7,7 +7,7 @@ const bcrypt = require('bcryptjs'); // Import bcrypt for hashing
 
 /**
  * @route   POST /api/users
- * @desc    Create a new user
+ * @desc    Create a new user by an Admin
  * @access  Private (Admin)
  */
 router.post('/', authMiddleware, adminMiddleware, async (req, res) => {
@@ -15,7 +15,6 @@ router.post('/', authMiddleware, adminMiddleware, async (req, res) => {
     // Accept a plain-text 'password' from the request body
     const { name, email, contactNumber, role, password } = req.body;
 
-    // Basic validation
     if (!name || !email || !password || !role) {
         return res.status(400).json({ message: 'Name, email, password, and role are required.' });
     }
@@ -37,7 +36,6 @@ router.post('/', authMiddleware, adminMiddleware, async (req, res) => {
             id
             name
             email
-            contactNumber
             role
           }
         }
@@ -95,7 +93,7 @@ router.get('/:id', authMiddleware, async (req, res) => {
   try {
     const query = `
       query GetUser($id: ID!) {
-        getUser(id: $id) {
+        queryUser(filter: { id: { eq: $id } }) {
           id
           name
           email
@@ -106,7 +104,10 @@ router.get('/:id', authMiddleware, async (req, res) => {
     `;
     const variables = { id: req.params.id };
     const data = await executeGraphQL(query, variables);
-    res.json(data.getUser || null);
+    if (!data.queryUser || data.queryUser.length === 0) {
+        return res.status(404).json({ msg: 'User not found' });
+    }
+    res.json(data.queryUser[0]);
   } catch (error) {
     console.error('Error fetching user:', error.message);
     res.status(500).send('Server Error');
@@ -121,18 +122,12 @@ router.get('/:id', authMiddleware, async (req, res) => {
 router.put('/:id', authMiddleware, adminMiddleware, async (req, res) => {
   try {
     const { name, email, contactNumber, role, password } = req.body;
+    const setPayload = { name, email, contactNumber, role };
 
-    // Build the 'set' object dynamically based on what was provided
-    const setPayload = {};
-    if (name) setPayload.name = name;
-    if (email) setPayload.email = email;
-    if (contactNumber) setPayload.contactNumber = contactNumber;
-    if (role) setPayload.role = role;
-
-    // If a new password is provided, hash it and add it to the payload
+    // If a new password is provided, hash it and add it to the update payload
     if (password) {
-      const salt = await bcrypt.genSalt(10);
-      setPayload.hashedPassword = await bcrypt.hash(password, salt);
+        const salt = await bcrypt.genSalt(10);
+        setPayload.hashedPassword = await bcrypt.hash(password, salt);
     }
 
     const mutation = `
@@ -151,12 +146,15 @@ router.put('/:id', authMiddleware, adminMiddleware, async (req, res) => {
 
     const variables = {
       input: {
-        filter: { id: [req.params.id] },
+        filter: { id: { eq: req.params.id } },
         set: setPayload
       }
     };
 
     const data = await executeGraphQL(mutation, variables);
+    if (!data.updateUser || data.updateUser.user.length === 0) {
+        return res.status(404).json({ msg: 'User not found' });
+    }
     res.json(data.updateUser.user[0]);
   } catch (error) {
     console.error('Error updating user:', error.message);
@@ -174,15 +172,14 @@ router.delete('/:id', authMiddleware, adminMiddleware, async (req, res) => {
     const mutation = `
       mutation DeleteUser($filter: UserFilter!) {
         deleteUser(filter: $filter) {
-          msg
           numUids
         }
       }
     `;
-    const variables = { filter: { id: [req.params.id] } };
+    const variables = { filter: { id: { eq: req.params.id } } };
     const data = await executeGraphQL(mutation, variables);
     if (data.deleteUser.numUids === 0) {
-        return res.status(404).json({ msg: 'User not found or already deleted' });
+        return res.status(404).json({ msg: 'User not found' });
     }
     res.json({ msg: 'User deleted successfully' });
   } catch (error) {
@@ -192,3 +189,4 @@ router.delete('/:id', authMiddleware, adminMiddleware, async (req, res) => {
 });
 
 module.exports = router;
+

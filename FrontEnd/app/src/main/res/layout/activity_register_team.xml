@@ -1,0 +1,143 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="#FFFFFF">
+
+    <LinearLayout
+        android:id="@+id/mainLayout"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal">
+
+        <!-- Utsav Logo -->
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@mipmap/ic_launcher"
+            android:contentDescription="Utsav Logo"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- Heading -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Register Team"
+            android:textSize="24sp"
+            android:textColor="#FF5722"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- College Info -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="College Name"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:layout_marginBottom="4dp"/>
+        <EditText
+            android:id="@+id/collegeNameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="Enter College Name"
+            android:background="#C0C0C0"
+            android:textColor="#000000"
+            android:padding="12dp"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Contact Info"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:layout_marginBottom="4dp"/>
+        <EditText
+            android:id="@+id/NameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="Enter Name"
+            android:inputType="textPersonName"
+            android:background="#C0C0C0"
+            android:textColor="#000000"
+            android:padding="12dp"
+            android:layout_marginBottom="8dp"/>
+        <EditText
+            android:id="@+id/collegeEmailEditText"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:background="#C0C0C0"
+            android:textColor="#000000"
+            android:padding="12dp"
+            android:layout_marginBottom="8dp"/>
+        <EditText
+            android:id="@+id/collegePhoneEditText"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="Phone Number"
+            android:inputType="phone"
+            android:background="#C0C0C0"
+            android:textColor="#000000"
+            android:padding="12dp"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Team Info -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Team Name"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:layout_marginBottom="4dp"/>
+        <EditText
+            android:id="@+id/teamNameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="Enter Team Name"
+            android:background="#C0C0C0"
+            android:textColor="#000000"
+            android:padding="12dp"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Team Members -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Team Members"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:layout_marginBottom="8dp"/>
+
+        <LinearLayout
+            android:id="@+id/membersContainer"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"/>
+
+        <Button
+            android:id="@+id/addMemberButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+ Add Member"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#FF5722"
+            android:layout_marginTop="8dp"
+            android:layout_gravity="center_horizontal"/>
+
+        <Button
+            android:id="@+id/submitTeamButton"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="Submit"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#FF5722"
+            android:textStyle="bold"
+            android:layout_marginTop="24dp"/>
+    </LinearLayout>
+</ScrollView>
