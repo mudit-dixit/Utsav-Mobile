@@ -93,7 +93,7 @@ router.get('/:id', authMiddleware, async (req, res) => {
   try {
     const query = `
       query GetUser($id: ID!) {
-        queryUser(filter: { id: { eq: $id } }) {
+        queryUser(filter: { id: [$id] }) { // Use array for consistency, although eq works here
           id
           name
           email
@@ -105,7 +105,7 @@ router.get('/:id', authMiddleware, async (req, res) => {
     const variables = { id: req.params.id };
     const data = await executeGraphQL(query, variables);
     if (!data.queryUser || data.queryUser.length === 0) {
-        return res.status(404).json({ msg: 'User not found' });
+      return res.status(404).json({ msg: 'User not found' });
     }
     res.json(data.queryUser[0]);
   } catch (error) {
@@ -122,17 +122,28 @@ router.get('/:id', authMiddleware, async (req, res) => {
 router.put('/:id', authMiddleware, adminMiddleware, async (req, res) => {
   try {
     const { name, email, contactNumber, role, password } = req.body;
-    const setPayload = { name, email, contactNumber, role };
 
-    // If a new password is provided, hash it and add it to the update payload
+    // Build the 'set' object dynamically based on what was provided
+    const setPayload = {};
+    if (name) setPayload.name = name;
+    if (email) setPayload.email = email;
+    if (contactNumber) setPayload.contactNumber = contactNumber;
+    if (role) setPayload.role = role;
+
+
+    // If a new password is provided, hash it and add it to the payload
     if (password) {
-        const salt = await bcrypt.genSalt(10);
-        setPayload.hashedPassword = await bcrypt.hash(password, salt);
+      const salt = await bcrypt.genSalt(10);
+      setPayload.hashedPassword = await bcrypt.hash(password, salt);
+    }
+
+    if (Object.keys(setPayload).length === 0) {
+        return res.status(400).json({ msg: 'No fields provided for update.' });
     }
 
     const mutation = `
-      mutation UpdateUser($input: UpdateUserInput!) {
-        updateUser(input: $input) {
+      mutation UpdateUser($filter: UserFilter!, $set: UserPatch!) {
+        updateUser(input: { filter: $filter, set: $set }) {
           user {
             id
             name
@@ -145,15 +156,13 @@ router.put('/:id', authMiddleware, adminMiddleware, async (req, res) => {
     `;
 
     const variables = {
-      input: {
-        filter: { id: { eq: req.params.id } },
-        set: setPayload
-      }
+      filter: { id: [req.params.id] }, // Use array for consistency
+      set: setPayload
     };
 
     const data = await executeGraphQL(mutation, variables);
-    if (!data.updateUser || data.updateUser.user.length === 0) {
-        return res.status(404).json({ msg: 'User not found' });
+     if (!data.updateUser || !data.updateUser.user || data.updateUser.user.length === 0) {
+      return res.status(404).json({ msg: 'User not found or update failed' });
     }
     res.json(data.updateUser.user[0]);
   } catch (error) {
@@ -161,6 +170,7 @@ router.put('/:id', authMiddleware, adminMiddleware, async (req, res) => {
     res.status(500).send('Server Error');
   }
 });
+
 
 /**
  * @route   DELETE /api/users/:id
@@ -176,12 +186,20 @@ router.delete('/:id', authMiddleware, adminMiddleware, async (req, res) => {
         }
       }
     `;
-    const variables = { filter: { id: { eq: req.params.id } } };
+    // --- THIS IS THE FIX ---
+    // The filter for delete mutations expects an array of IDs.
+    const variables = {
+      filter: { id: [req.params.id] }
+    };
+    // --- END OF FIX ---
+
     const data = await executeGraphQL(mutation, variables);
-    if (data.deleteUser.numUids === 0) {
-        return res.status(404).json({ msg: 'User not found' });
+
+    // Check if data and deleteUser exist before accessing numUids
+    if (!data || !data.deleteUser || data.deleteUser.numUids === 0) {
+        return res.status(404).json({ msg: 'User not found or already deleted' });
     }
-    res.json({ msg: 'User deleted successfully' });
+    res.json({ msg: 'User deleted successfully' }); // Send consistent success message
   } catch (error) {
     console.error('Error deleting user:', error.message);
     res.status(500).send('Server Error');
