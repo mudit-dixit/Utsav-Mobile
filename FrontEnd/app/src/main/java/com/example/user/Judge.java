@@ -1,15 +1,35 @@
-// Judge.java
 package com.example.user;
 
-public class Judge {
-    private String name;
-    private String phone;
+import com.google.gson.annotations.SerializedName;
 
-    public Judge(String name, String phone) {
-        this.name = name;
-        this.phone = phone;
+public class Judge {
+    @SerializedName("id")
+    private String id;
+
+    @SerializedName("name")
+    private String name;
+
+    @SerializedName("email")
+    private String email;
+
+    @SerializedName("contactNumber")
+    private String contactNumber; // Changed from phone
+
+    // --- Getters ---
+
+    public String getId() {
+        return id;
     }
 
-    public String getName() { return name; }
-    public String getPhone() { return phone; }
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getContactNumber() {
+        return contactNumber;
+    }
 }
