@@ -6,8 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
+// Removed Button and EditText imports
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,6 +14,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton; // Import FAB
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
@@ -30,8 +30,9 @@ public class JudgesFragment extends Fragment implements JudgeAdapter.OnJudgeList
     private static final String TAG = "JudgesFragment";
     private RecyclerView recyclerView;
     private JudgeAdapter adapter;
-    private EditText searchEditText; // Keep for future use
-    private Button addButton;
+    // private EditText searchEditText; // Removed
+    // private Button addButton; // Removed
+    private FloatingActionButton fabAddJudge; // Added FAB
     private ApiClient apiClient;
     private Gson gson = new Gson();
     private List<Judge> judgeList = new ArrayList<>();
@@ -41,15 +42,17 @@ public class JudgesFragment extends Fragment implements JudgeAdapter.OnJudgeList
         View view = inflater.inflate(R.layout.fragment_judge, container, false);
 
         apiClient = new ApiClient(requireContext());
-        searchEditText = view.findViewById(R.id.search_edit_text);
-        addButton = view.findViewById(R.id.add_button);
+        // searchEditText = view.findViewById(R.id.search_edit_text); // Removed
+        // addButton = view.findViewById(R.id.add_button); // Removed
+        fabAddJudge = view.findViewById(R.id.fab_add_judge); // Find new FAB
         recyclerView = view.findViewById(R.id.recycler_view_judges);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        adapter = new JudgeAdapter(this); // Pass listener
+        adapter = new JudgeAdapter(this);
         recyclerView.setAdapter(adapter);
 
-        addButton.setOnClickListener(v -> {
+        // Listener moved to fabAddJudge
+        fabAddJudge.setOnClickListener(v -> {
             Intent intent = new Intent(requireContext(), RegisterJudgeActivity.class);
             startActivity(intent);
         });
@@ -60,11 +63,10 @@ public class JudgesFragment extends Fragment implements JudgeAdapter.OnJudgeList
     @Override
     public void onResume() {
         super.onResume();
-        fetchJudges(); // Fetch data when fragment resumes
+        fetchJudges();
     }
 
     private void fetchJudges() {
-        // Omitting ProgressBar logic as requested
         apiClient.get("judges").enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -113,6 +115,7 @@ public class JudgesFragment extends Fragment implements JudgeAdapter.OnJudgeList
                 .show();
     }
 
+    // Kept onEditClick as requested
     @Override
     public void onEditClick(Judge judge) {
         // TODO: Implement navigation to an EditJudgeActivity or show an edit dialog
@@ -120,7 +123,6 @@ public class JudgesFragment extends Fragment implements JudgeAdapter.OnJudgeList
     }
 
     private void deleteJudgeFromServer(Judge judge, int position) {
-        // Omitting ProgressBar logic
         apiClient.delete("judges/" + judge.getId()).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -144,7 +146,6 @@ public class JudgesFragment extends Fragment implements JudgeAdapter.OnJudgeList
                 if (getActivity() != null) {
                     getActivity().runOnUiThread(() -> {
                         Toast.makeText(getContext(), "'" + judge.getName() + "' deleted", Toast.LENGTH_SHORT).show();
-                        // Refresh the list from the server
                         fetchJudges();
                     });
                 }

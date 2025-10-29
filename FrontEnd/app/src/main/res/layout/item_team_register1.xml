@@ -45,8 +45,8 @@
             android:padding="8dp"
             android:text="+"
             android:textSize="18sp"
-            android:textColor="#FFFFFF"
-            android:backgroundTint="#FF6B00"
+            android:textColor="#FF5722"
+            android:backgroundTint="#fff"
             android:contentDescription="Add Team" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

@@ -59,30 +59,7 @@
         android:layout_marginBottom="15dp"
         app:cardCornerRadius="8dp"
         app:cardElevation="2dp">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="8dp"
-            android:gravity="center_vertical">
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@android:drawable/ic_menu_search"
-                android:contentDescription="Search Icon"
-                android:alpha="0.6"/>
-            <EditText
-                android:id="@+id/edit_text_search"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="Search Team Scores"
-                android:background="@android:color/transparent"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:singleLine="true"
-                android:textSize="16sp"/>
-        </LinearLayout>
+
     </androidx.cardview.widget.CardView>
 
     <ProgressBar

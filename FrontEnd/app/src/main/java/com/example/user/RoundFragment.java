@@ -6,8 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
+// Removed Button and EditText imports
 import android.widget.ProgressBar;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -16,6 +15,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton; // Import FAB
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -36,8 +36,9 @@ public class RoundFragment extends Fragment implements RoundAdapter.OnRoundActio
     private static final String TAG = "RoundFragment";
     private RecyclerView recyclerView;
     private RoundAdapter adapter;
-    private EditText searchEditText; // Keep for future use
-    private Button addButton;
+    // private EditText searchEditText; // Removed
+    // private Button addButton; // Removed
+    private FloatingActionButton fabAddRound; // Added FAB
     private ProgressBar progressBar;
     private ApiClient apiClient;
     private Gson gson = new Gson();
@@ -49,8 +50,9 @@ public class RoundFragment extends Fragment implements RoundAdapter.OnRoundActio
         View view = inflater.inflate(R.layout.fragment_round, container, false);
 
         apiClient = new ApiClient(requireContext());
-        searchEditText = view.findViewById(R.id.search_edit_text);
-        addButton = view.findViewById(R.id.add_button);
+        // searchEditText = view.findViewById(R.id.search_edit_text); // Removed
+        // addButton = view.findViewById(R.id.add_button); // Removed
+        fabAddRound = view.findViewById(R.id.fab_add_round); // Find new FAB
         recyclerView = view.findViewById(R.id.recycler_view_rounds);
         progressBar = view.findViewById(R.id.progressBar);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -59,7 +61,8 @@ public class RoundFragment extends Fragment implements RoundAdapter.OnRoundActio
         adapter = new RoundAdapter(requireContext(), this); // Pass context AND listener
         recyclerView.setAdapter(adapter);
 
-        addButton.setOnClickListener(v -> {
+        // Listener moved to fabAddRound
+        fabAddRound.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), RoundCreationActivity.class);
             startActivity(intent);
         });
