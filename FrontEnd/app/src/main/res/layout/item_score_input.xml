@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingVertical="8dp">
+
+    <TextView
+        android:id="@+id/text_criteria_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Criteria Name"
+        android:textSize="16sp"
+        android:textColor="@android:color/black"
+        android:layout_gravity="center_vertical"/>
+
+    <EditText
+        android:id="@+id/edit_score"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:hint="Score"
+        android:gravity="center"
+        android:maxLength="3"
+        android:background="@drawable/rounded_box" /> <!-- Use your drawable -->
+</LinearLayout>

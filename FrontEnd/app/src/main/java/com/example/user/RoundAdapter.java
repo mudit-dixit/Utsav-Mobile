@@ -6,8 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView; // Import ImageView
 import android.widget.TextView;
-import android.widget.Toast; // Added for TODOs
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
@@ -17,9 +17,22 @@ public class RoundAdapter extends RecyclerView.Adapter<RoundAdapter.RoundViewHol
 
     private List<Round> roundList = new ArrayList<>();
     private final Context context;
+    private final OnRoundActionListener listener; // <-- ADD LISTENER INTERFACE
 
-    public RoundAdapter(Context context) {
+    // --- ADD INTERFACE ---
+    public interface OnRoundActionListener {
+        void onStartClick(Round round);
+        void onScoreClick(Round round);
+        void onRegisterClick(Round round);
+        void onDeleteClick(Round round, int position); // <-- ADD DELETE ACTION
+        void onEditClick(Round round);   // <-- ADD EDIT ACTION
+    }
+    // --- END INTERFACE ---
+
+    // Constructor now takes the listener
+    public RoundAdapter(Context context, OnRoundActionListener listener) {
         this.context = context;
+        this.listener = listener; // <-- STORE LISTENER
     }
 
     public void setRounds(List<Round> newRounds) {
@@ -30,7 +43,6 @@ public class RoundAdapter extends RecyclerView.Adapter<RoundAdapter.RoundViewHol
     @NonNull
     @Override
     public RoundViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // Ensure you have a layout file named 'item_round.xml'
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_round, parent, false);
         return new RoundViewHolder(view);
@@ -40,36 +52,30 @@ public class RoundAdapter extends RecyclerView.Adapter<RoundAdapter.RoundViewHol
     public void onBindViewHolder(@NonNull RoundViewHolder holder, int position) {
         Round round = roundList.get(position);
         holder.roundName.setText(round.getName());
-        holder.roundStatus.setText(round.getStatus()); // Display status
+        holder.roundStatus.setText(round.getStatus() != null ? round.getStatus() : "Unknown");
 
-        // --- Button Click Listeners ---
-
+        // --- Use Listener for Clicks ---
         holder.startButton.setOnClickListener(v -> {
-            // Logic to start the round (potentially update status via API)
-            // Then navigate to Judge Selection
-            Intent intent = new Intent(context, JudgeSelectionActivity.class);
-            intent.putExtra("ROUND_ID", round.getId());
-            intent.putExtra("ROUND_NAME", round.getName());
-            context.startActivity(intent);
-            // Example: Toast.makeText(context, "Start clicked for " + round.getName(), Toast.LENGTH_SHORT).show();
+            if (listener != null) listener.onStartClick(round);
         });
-
         holder.scoreButton.setOnClickListener(v -> {
-            // Navigate to Score View Activity, passing round details
-            Intent intent = new Intent(context, ScoreViewActivity.class);
-            intent.putExtra("ROUND_ID", round.getId());
-            intent.putExtra("ROUND_NAME", round.getName());
-            context.startActivity(intent);
-            // Example: Toast.makeText(context, "Score clicked for " + round.getName(), Toast.LENGTH_SHORT).show();
+            if (listener != null) listener.onScoreClick(round);
         });
-
         holder.registerButton.setOnClickListener(v -> {
-            // Navigate to Rounds Register Activity (to manage teams in this round)
-            Intent intent = new Intent(context, RoundsRegisterActivity.class);
-            intent.putExtra("ROUND_ID", round.getId());
-            intent.putExtra("ROUND_NAME", round.getName());
-            context.startActivity(intent);
+            if (listener != null) listener.onRegisterClick(round);
         });
+        holder.deleteIcon.setOnClickListener(v -> { // <-- SET DELETE LISTENER
+            if (listener != null) {
+                int currentPosition = holder.getAdapterPosition();
+                if (currentPosition != RecyclerView.NO_POSITION) {
+                    listener.onDeleteClick(roundList.get(currentPosition), currentPosition);
+                }
+            }
+        });
+        holder.editIcon.setOnClickListener(v -> { // <-- SET EDIT LISTENER
+            if (listener != null) listener.onEditClick(round);
+        });
+        // --- End Listener Usage ---
     }
 
     @Override
@@ -77,18 +83,22 @@ public class RoundAdapter extends RecyclerView.Adapter<RoundAdapter.RoundViewHol
         return roundList.size();
     }
 
+    // --- ADD ICONS TO VIEWHOLDER ---
     static class RoundViewHolder extends RecyclerView.ViewHolder {
         TextView roundName, roundStatus;
         Button startButton, scoreButton, registerButton;
+        ImageView editIcon, deleteIcon; // <-- ADD ICON REFERENCES
 
         public RoundViewHolder(View itemView) {
             super(itemView);
-            // Make sure these IDs match your item_round.xml layout
             roundName = itemView.findViewById(R.id.text_round_name);
-            roundStatus = itemView.findViewById(R.id.text_round_status); // Added TextView for status
-            startButton = itemView.findViewById(R.id.button_start);
+            roundStatus = itemView.findViewById(R.id.text_round_status);
+            startButton = itemView.findViewById(R.id.button_start); // Corrected ID from layout
             scoreButton = itemView.findViewById(R.id.button_score);
             registerButton = itemView.findViewById(R.id.button_register);
+            editIcon = itemView.findViewById(R.id.icon_edit_round);   // <-- FIND EDIT ICON
+            deleteIcon = itemView.findViewById(R.id.icon_delete_round); // <-- FIND DELETE ICON
         }
     }
+    // --- END VIEWHOLDER UPDATE ---
 }

@@ -10,7 +10,7 @@ const judgeRouter = require('./routes/judge');
 const userRouter = require('./routes/user');
 const roundRouter = require('./routes/round');
 const scoreRouter = require('./routes/score');
-
+const leaderboardRouter = require('./routes/leaderboard');
 
 // 3. Initialize the Express application
 const app = express();
@@ -34,7 +34,7 @@ app.use('/api/judges', judgeRouter);
 app.use('/api/users', userRouter);
 app.use('/api/rounds', roundRouter);
 app.use('/api/scores', scoreRouter);
-
+app.use('/api/leaderboard', leaderboardRouter);
 
 // 7. Start the server
 app.listen(PORT, () => {
