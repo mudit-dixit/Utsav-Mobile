@@ -1,137 +1,148 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="16dp"
-    android:background="#FFFFFF">
+    android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/mainLayout"
-        android:orientation="vertical"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal">
-
-        <!-- Heading -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Create Round"
-            android:textSize="24sp"
-            android:textColor="#FF5722"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:layout_marginBottom="16dp"/>
-
-        <!-- Round Name -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Round Name"
-            android:textSize="16sp"
-            android:textColor="#000000"
-            android:layout_marginBottom="4dp"/>
-        <EditText
-            android:id="@+id/roundNameEditText"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="Enter Round Name"
-            android:background="#C0C0C0"
-            android:textColor="#000000"
-            android:padding="12dp"
-            android:layout_marginBottom="12dp"/>
-
-        <!-- Round Description -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Description"
-            android:textSize="16sp"
-            android:textColor="#000000"
-            android:layout_marginBottom="4dp"/>
-        <EditText
-            android:id="@+id/roundDescEditText"
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:hint="Enter Round Description"
-            android:background="#C0C0C0"
-            android:textColor="#000000"
-            android:padding="12dp"
-            android:gravity="top"
-            android:inputType="textMultiLine"
-            android:layout_marginBottom="12dp"/>
-
-        <!-- Date -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Date"
-            android:textSize="16sp"
-            android:textColor="#000000"
-            android:layout_marginBottom="4dp"/>
-        <EditText
-            android:id="@+id/roundDateEditText"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="Enter Date (dd/mm/yyyy)"
-            android:background="#C0C0C0"
-            android:textColor="#000000"
-            android:padding="12dp"
-            android:layout_marginBottom="12dp"/>
-
-        <!-- Time Slot -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Time Slot"
-            android:textSize="16sp"
-            android:textColor="#000000"
-            android:layout_marginBottom="4dp"/>
-        <EditText
-            android:id="@+id/roundTimeEditText"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="Enter Time Slot"
-            android:background="#C0C0C0"
-            android:textColor="#000000"
-            android:padding="12dp"
-            android:layout_marginBottom="16dp"/>
-
-        <!-- Criteria Section -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Criteria"
-            android:textSize="16sp"
-            android:textColor="#000000"
-            android:layout_marginBottom="8dp"/>
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        android:padding="16dp">
 
         <LinearLayout
-            android:id="@+id/criteriaContainer"
-            android:orientation="vertical"
+            android:id="@+id/mainLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"/>
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
-        <!-- Add Criteria Button -->
-        <Button
-            android:id="@+id/addCriteriaButton"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:text="+ Add Criteria"
-            android:textColor="#FFFFFF"
-            android:backgroundTint="#FF5722"
-            android:layout_marginTop="8dp"
-            android:layout_gravity="center_horizontal"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:gravity="center"
+                android:text="Create Round"
+                android:textColor="#FF5722"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
-        <!-- Submit Round Button -->
-        <Button
-            android:id="@+id/submitRoundButton"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="Submit Round"
-            android:textColor="#FFFFFF"
-            android:backgroundTint="#FF5722"
-            android:textStyle="bold"
-            android:layout_marginTop="24dp"/>
-    </LinearLayout>
-</ScrollView>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:text="Round Name"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/roundNameEditText"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="12dp"
+                android:background="#C0C0C0"
+                android:hint="Enter Round Name"
+                android:padding="12dp"
+                android:textColor="#000000" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:text="Description"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/roundDescEditText"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_marginBottom="12dp"
+                android:background="#C0C0C0"
+                android:gravity="top"
+                android:hint="Enter Round Description"
+                android:inputType="textMultiLine"
+                android:padding="12dp"
+                android:textColor="#000000" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:text="Date"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/roundDateEditText"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="12dp"
+                android:background="#C0C0C0"
+                android:hint="Enter Date (dd/mm/yyyy)"
+                android:padding="12dp"
+                android:textColor="#000000" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:text="Time Slot"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/roundTimeEditText"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="16dp"
+                android:background="#C0C0C0"
+                android:hint="Enter Time Slot"
+                android:padding="12dp"
+                android:textColor="#000000" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Criteria"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:id="@+id/criteriaContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:orientation="vertical" />
+
+            <Button
+                android:id="@+id/addCriteriaButton"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="#FF5722"
+                android:text="+ Add Criteria"
+                android:textColor="#FFFFFF" />
+
+            <Button
+                android:id="@+id/submitRoundButton"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="24dp"
+                android:backgroundTint="#FF5722"
+                android:text="Submit Round"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
+
+</RelativeLayout>

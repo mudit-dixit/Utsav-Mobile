@@ -1,33 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="8dp"
-    android:elevation="4dp"
+    app:cardElevation="4dp"
+    app:cardCornerRadius="8dp"
     android:padding="12dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="16dp">
 
-        <!-- Top Row: Round Name + Icons -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical">
 
-            <TextView
-                android:id="@+id/text_round_name"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Dance With Us"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="#000"/>
+                android:orientation="vertical">
 
-            <!-- Edit Icon -->
+                <TextView
+                    android:id="@+id/text_round_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Dance With Us"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="#000"/>
+
+                <TextView
+                    android:id="@+id/text_round_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pending"
+                    android:textSize="14sp"
+                    android:textStyle="italic"
+                    android:textColor="#888888"
+                    android:layout_marginTop="4dp"/>
+
+            </LinearLayout>
+
             <ImageView
                 android:id="@+id/icon_edit_round"
                 android:layout_width="28dp"
@@ -36,10 +55,9 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
                 android:focusable="true"
-                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
                 android:contentDescription="Edit Round"/>
 
-            <!-- Delete Icon -->
             <ImageView
                 android:id="@+id/icon_delete_round"
                 android:layout_width="28dp"
@@ -48,19 +66,19 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
                 android:focusable="true"
+                android:layout_marginStart="16dp"
                 android:contentDescription="Delete Round"/>
         </LinearLayout>
 
-        <!-- Bottom Row: Buttons -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_marginTop="12dp">
+            android:gravity="end"
+            android:layout_marginTop="16dp">
 
             <Button
-                android:id="@+id/button_start_score"
+                android:id="@+id/button_start"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Start"

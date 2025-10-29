@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#E8ECEF">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:elevation="4dp">
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="190dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/ic_launcher" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:padding="24dp">
+
+            <TextView
+                android:id="@+id/text_round_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Round Name"
+                android:textColor="#FF6B00"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:id="@+id/text_judge_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="JUDGE: Judge ABCD"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:layout_marginBottom="20dp" />
+
+
+            <LinearLayout
+                android:id="@+id/container_teams"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/container_bg"
+                android:elevation="8dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Registered Teams"
+                    android:textColor="#FF6B00"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:layout_marginBottom="8dp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/teamRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="60dp"
+                    android:orientation="horizontal"
+                    android:scrollbars="horizontal"
+                    android:padding="4dp"
+                    android:clipToPadding="false" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/criteriaContainerMain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginHorizontal="8dp"
+                android:background="@drawable/silver_container_bg"
+                android:elevation="6dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/text_selected_team"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Selected Team: -"
+                    android:textColor="#FF6B00"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:layout_marginBottom="10dp" />
+            </LinearLayout>
+
+            <!-- Buttons Section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp">
+
+                <!-- Row: Submit and Reset -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                    <Button
+                        android:id="@+id/button_submit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="52dp"
+                        android:text="Submit"
+                        android:backgroundTint="#FF6B00"
+                        android:textColor="#FFFFFF"
+                        android:textStyle="bold"
+                        android:paddingHorizontal="24dp"
+                        android:layout_marginEnd="12dp"
+                        android:elevation="4dp" />
+
+                    <Button
+                        android:id="@+id/button_reset"
+                        android:layout_width="wrap_content"
+                        android:layout_height="52dp"
+                        android:text="Reset"
+                        android:backgroundTint="#FF6B00"
+                        android:textColor="#FFFFFF"
+                        android:textStyle="bold"
+                        android:paddingHorizontal="24dp"
+                        android:elevation="4dp" />
+                </LinearLayout>
+
+                <!-- Large End Round Button Below -->
+                <Button
+                    android:id="@+id/button_end_round"
+                    android:layout_width="220dp"
+                    android:layout_height="58dp"
+                    android:text="End Round"
+                    android:backgroundTint="#FF6B00"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:layout_marginTop="18dp"
+                    android:elevation="6dp"
+                    android:paddingHorizontal="30dp" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

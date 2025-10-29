@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.User"
         android:networkSecurityConfig="@xml/network_security_config">
+        <activity android:name=".RoundsRegisterActivity" />
 
         <activity
             android:name=".LoginActivity"
@@ -39,7 +40,21 @@
         <activity
             android:name=".MainActivity"
             android:exported="false">
+
         </activity>
+        <activity
+            android:name=".NewRoundRegisterActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ScoreViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".JudgeSelectionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".StartActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

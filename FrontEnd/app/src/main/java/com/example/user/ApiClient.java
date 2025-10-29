@@ -24,7 +24,7 @@ public class ApiClient {
     /**
      * Makes a GET request to a specified endpoint.
      * Automatically adds the auth token if it exists.
-     * @param endpoint e.g., "teams", "judges"
+     * @param endpoint e.g., "teams", "users"
      * @return A Call object ready to be enqueued.
      */
     public okhttp3.Call get(String endpoint) {
@@ -43,7 +43,7 @@ public class ApiClient {
     /**
      * Makes a POST request to a specified endpoint with a JSON body.
      * Automatically adds the auth token if it exists.
-     * @param endpoint e.g., "auth/login", "teams"
+     * @param endpoint e.g., "auth/login", "users"
      * @param jsonBody The JSON string to send.
      * @return A Call object ready to be enqueued.
      */
@@ -67,15 +67,38 @@ public class ApiClient {
     }
 
     /**
+     * Makes a PUT request to a specified endpoint with a JSON body.
+     * Automatically adds the auth token.
+     * @param endpoint e.g., "users/0x123", "rounds/0xabc"
+     * @param jsonBody The JSON string to send.
+     * @return A Call object ready to be enqueued.
+     */
+    public okhttp3.Call put(String endpoint, String jsonBody) {
+        RequestBody body = RequestBody.create(jsonBody, MediaType.get("application/json; charset=utf-8"));
+
+        Request.Builder requestBuilder = new Request.Builder()
+                .url(BASE_URL + endpoint)
+                .put(body); // Use .put() for the HTTP method
+
+        String token = sessionManager.getAuthToken();
+        if (token != null) {
+            requestBuilder.addHeader("x-auth-token", token);
+        }
+
+        Request request = requestBuilder.build();
+        return httpClient.newCall(request);
+    }
+
+    /**
      * Makes a DELETE request to a specified endpoint.
      * Automatically adds the auth token.
-     * @param endpoint e.g., "teams/0x123"
+     * @param endpoint e.g., "users/0x123", "teams/0xdef"
      * @return A Call object ready to be enqueued.
      */
     public okhttp3.Call delete(String endpoint) {
         Request.Builder requestBuilder = new Request.Builder()
                 .url(BASE_URL + endpoint)
-                .delete();
+                .delete(); // Use .delete() for the HTTP method
 
         String token = sessionManager.getAuthToken();
         if (token != null) {
