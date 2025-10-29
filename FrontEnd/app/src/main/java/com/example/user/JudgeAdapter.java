@@ -45,12 +45,7 @@ public class JudgeAdapter extends RecyclerView.Adapter<JudgeAdapter.JudgeViewHol
         holder.nameText.setText(judge.getName());
         holder.phoneText.setText(judge.getContactNumber()); // Use contactNumber
 
-        // Edit icon click
-        holder.editIcon.setOnClickListener(v -> {
-            if (onJudgeListener != null) {
-                onJudgeListener.onEditClick(judge);
-            }
-        });
+
 
         // Delete icon click
         holder.deleteIcon.setOnClickListener(v -> {
@@ -70,13 +65,12 @@ public class JudgeAdapter extends RecyclerView.Adapter<JudgeAdapter.JudgeViewHol
 
     public static class JudgeViewHolder extends RecyclerView.ViewHolder {
         TextView nameText, phoneText;
-        ImageView editIcon, deleteIcon;
+        ImageView deleteIcon;
 
         public JudgeViewHolder(@NonNull View itemView) {
             super(itemView);
             nameText = itemView.findViewById(R.id.text_judge_name);
             phoneText = itemView.findViewById(R.id.text_judge_phone);
-            editIcon = itemView.findViewById(R.id.icon_add_judge); // Assuming this is edit
             deleteIcon = itemView.findViewById(R.id.icon_delete_judge);
         }
     }

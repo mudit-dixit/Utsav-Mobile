@@ -72,9 +72,6 @@ public class RoundAdapter extends RecyclerView.Adapter<RoundAdapter.RoundViewHol
                 }
             }
         });
-        holder.editIcon.setOnClickListener(v -> { // <-- SET EDIT LISTENER
-            if (listener != null) listener.onEditClick(round);
-        });
         // --- End Listener Usage ---
     }
 
@@ -87,7 +84,7 @@ public class RoundAdapter extends RecyclerView.Adapter<RoundAdapter.RoundViewHol
     static class RoundViewHolder extends RecyclerView.ViewHolder {
         TextView roundName, roundStatus;
         Button startButton, scoreButton, registerButton;
-        ImageView editIcon, deleteIcon; // <-- ADD ICON REFERENCES
+        ImageView  deleteIcon; // <-- ADD ICON REFERENCES
 
         public RoundViewHolder(View itemView) {
             super(itemView);
@@ -96,8 +93,7 @@ public class RoundAdapter extends RecyclerView.Adapter<RoundAdapter.RoundViewHol
             startButton = itemView.findViewById(R.id.button_start); // Corrected ID from layout
             scoreButton = itemView.findViewById(R.id.button_score);
             registerButton = itemView.findViewById(R.id.button_register);
-            editIcon = itemView.findViewById(R.id.icon_edit_round);   // <-- FIND EDIT ICON
-            deleteIcon = itemView.findViewById(R.id.icon_delete_round); // <-- FIND DELETE ICON
+           deleteIcon = itemView.findViewById(R.id.icon_delete_round); // <-- FIND DELETE ICON
         }
     }
     // --- END VIEWHOLDER UPDATE ---

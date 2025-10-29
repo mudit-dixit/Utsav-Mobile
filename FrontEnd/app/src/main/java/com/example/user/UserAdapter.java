@@ -45,12 +45,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         holder.nameText.setText(user.getName());
         holder.roleText.setText(user.getRole());
 
-        // Edit Icon Click Listener
-        holder.editIcon.setOnClickListener(v -> {
-            if (onUserListener != null) {
-                onUserListener.onEditClick(user);
-            }
-        });
+
 
         // Delete Icon Click Listener
         holder.deleteIcon.setOnClickListener(v -> {
@@ -70,13 +65,12 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
     public static class UserViewHolder extends RecyclerView.ViewHolder {
         TextView nameText, roleText;
-        ImageView editIcon, deleteIcon;
+        ImageView  deleteIcon;
 
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
             nameText = itemView.findViewById(R.id.text_user_name);
             roleText = itemView.findViewById(R.id.text_user_designation);
-            editIcon = itemView.findViewById(R.id.icon_add_user);
             deleteIcon = itemView.findViewById(R.id.icon_delete_user);
         }
     }

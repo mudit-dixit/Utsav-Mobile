@@ -47,16 +47,6 @@
 
             </LinearLayout>
 
-            <ImageView
-                android:id="@+id/icon_edit_round"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:src="@android:drawable/ic_menu_edit"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true"
-                android:layout_marginStart="16dp"
-                android:contentDescription="Edit Round"/>
 
             <ImageView
                 android:id="@+id/icon_delete_round"

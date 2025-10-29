@@ -6,7 +6,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+// Remove Button import if not used elsewhere
+// Remove EditText import
+// Remove ProgressBar import
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,8 +16,11 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton; // Import FAB
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import org.json.JSONException; // Import JSONException
+import org.json.JSONObject; // Import JSONObject
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -29,6 +34,8 @@ public class TeamsFragment extends Fragment implements TeamAdapter.OnTeamListene
     private static final String TAG = "TeamsFragment";
     private RecyclerView recyclerView;
     private TeamAdapter adapter;
+    // private ProgressBar progressBar; // Removed
+    private FloatingActionButton fabAdd; // Use FAB type
     private ApiClient apiClient;
     private Gson gson = new Gson();
     private List<Team> teamList = new ArrayList<>();
@@ -39,14 +46,15 @@ public class TeamsFragment extends Fragment implements TeamAdapter.OnTeamListene
 
         apiClient = new ApiClient(requireContext());
         recyclerView = view.findViewById(R.id.recycler_view_teams);
+        // progressBar = view.findViewById(R.id.progressBar); // Removed
+        fabAdd = view.findViewById(R.id.fab_add); // Find FAB by its ID
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        // Initialize adapter with the listener
         adapter = new TeamAdapter(this);
         recyclerView.setAdapter(adapter);
 
-        Button addButton = view.findViewById(R.id.add_button);
-        addButton.setOnClickListener(v -> {
+        // Set listener on the FAB
+        fabAdd.setOnClickListener(v -> {
             Intent intent = new Intent(requireContext(), RegisterTeamActivity.class);
             startActivity(intent);
         });
@@ -57,35 +65,58 @@ public class TeamsFragment extends Fragment implements TeamAdapter.OnTeamListene
     @Override
     public void onResume() {
         super.onResume();
-        // Fetch data every time the fragment becomes visible to the user.
-        // This ensures the list is refreshed after returning from RegisterTeamActivity.
         fetchTeams();
     }
 
     private void fetchTeams() {
-        // Show a progress bar here if you have one in fragment_team.xml
+        // if (progressBar != null) progressBar.setVisibility(View.VISIBLE); // Removed
         apiClient.get("teams").enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 Log.e(TAG, "Failed to fetch teams", e);
                 if (getActivity() != null) {
-                    getActivity().runOnUiThread(() -> Toast.makeText(getContext(), "Failed to load data", Toast.LENGTH_SHORT).show());
+                    getActivity().runOnUiThread(() -> {
+                        // if (progressBar != null) progressBar.setVisibility(View.GONE); // Removed
+                        Toast.makeText(getContext(), "Failed to load data", Toast.LENGTH_SHORT).show();
+                    });
                 }
             }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                 final String responseBody = response.body().string(); // Read body once
                 if (!response.isSuccessful()) {
-                    Log.e(TAG, "Unsuccessful response fetching teams");
+                    Log.e(TAG, "Unsuccessful response fetching teams: " + responseBody);
+                     if (getActivity() != null) {
+                        getActivity().runOnUiThread(() -> {
+                            // if (progressBar != null) progressBar.setVisibility(View.GONE); // Removed
+                            Toast.makeText(getContext(), "Failed to load teams: Server Error", Toast.LENGTH_SHORT).show();
+                        });
+                    }
                     return;
                 }
 
-                final String responseBody = response.body().string();
                 Type listType = new TypeToken<ArrayList<Team>>(){}.getType();
-                teamList = gson.fromJson(responseBody, listType);
+                List<Team> fetchedTeams = null;
+                 try {
+                     fetchedTeams = gson.fromJson(responseBody, listType);
+                 } catch (Exception e) {
+                     Log.e(TAG, "Error parsing teams JSON", e);
+                 }
 
-                if (getActivity() != null && teamList != null) {
-                    getActivity().runOnUiThread(() -> adapter.setTeams(teamList));
+                 final List<Team> finalFetchedTeams = fetchedTeams;
+                 if (getActivity() != null) {
+                    getActivity().runOnUiThread(() -> {
+                        // if (progressBar != null) progressBar.setVisibility(View.GONE); // Removed
+                        if (finalFetchedTeams != null) {
+                            teamList = finalFetchedTeams; // Update local list
+                            adapter.setTeams(teamList); // Update adapter
+                        } else {
+                            teamList = new ArrayList<>(); // Clear local list
+                            adapter.setTeams(teamList); // Update adapter
+                             Toast.makeText(getContext(), "No teams found or error parsing data", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
             }
         });
@@ -93,7 +124,6 @@ public class TeamsFragment extends Fragment implements TeamAdapter.OnTeamListene
 
     @Override
     public void onDeleteClick(Team team, int position) {
-        // Show confirmation dialog
         new AlertDialog.Builder(requireContext())
                 .setTitle("Delete Team")
                 .setMessage("Are you sure you want to delete '" + team.getName() + "'?")
@@ -102,36 +132,44 @@ public class TeamsFragment extends Fragment implements TeamAdapter.OnTeamListene
                 .show();
     }
 
+    // No onEditClick needed anymore
+
     private void deleteTeamFromServer(Team team, int position) {
+        // if (progressBar != null) progressBar.setVisibility(View.VISIBLE); // Removed
         apiClient.delete("teams/" + team.getId()).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 Log.e(TAG, "Failed to delete team", e);
                 if (getActivity() != null) {
-                    getActivity().runOnUiThread(() -> Toast.makeText(getContext(), "Deletion failed", Toast.LENGTH_SHORT).show());
+                    getActivity().runOnUiThread(() -> {
+                         // if (progressBar != null) progressBar.setVisibility(View.GONE); // Removed
+                        Toast.makeText(getContext(), "Deletion failed", Toast.LENGTH_SHORT).show();
+                    });
                 }
             }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                final String responseBody = response.body().string();
                 if (!response.isSuccessful()) {
-                    Log.e(TAG, "Unsuccessful response deleting team");
-                    // Optionally show an error message from the response body
+                    Log.e(TAG, "Unsuccessful response deleting team: " + responseBody);
+                    if (getActivity() != null) {
+                         getActivity().runOnUiThread(() -> {
+                              // if (progressBar != null) progressBar.setVisibility(View.GONE); // Removed
+                             Toast.makeText(getContext(), "Deletion failed: Server Error", Toast.LENGTH_SHORT).show();
+                         });
+                    }
                     return;
                 }
 
                 if (getActivity() != null) {
                     getActivity().runOnUiThread(() -> {
                         Toast.makeText(getContext(), "'" + team.getName() + "' deleted", Toast.LENGTH_SHORT).show();
-                        // This part is now handled by re-fetching the list in onResume,
-                        // but we can leave it for an immediate visual update.
-                        teamList.remove(position);
-                        adapter.notifyItemRemoved(position);
-                        adapter.notifyItemRangeChanged(position, teamList.size());
+                        // Refresh list from server
+                        fetchTeams();
                     });
                 }
             }
         });
     }
 }
-

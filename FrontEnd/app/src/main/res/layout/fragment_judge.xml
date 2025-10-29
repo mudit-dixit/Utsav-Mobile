@@ -18,9 +18,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="Search"
             android:drawableStart="@android:drawable/ic_menu_search"
-            android:padding="8dp"/>
+            android:hint="Search"
+            android:padding="8dp" />
 
         <Button
             android:id="@+id/add_button"
