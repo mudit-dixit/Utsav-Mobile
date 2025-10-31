@@ -12,7 +12,7 @@ import okhttp3.RequestBody;
  */
 public class ApiClient {
 
-    private static final String BASE_URL = "http://10.0.2.2:3000/api/";
+    private static final String BASE_URL = "https://1182802fb10c.ngrok-free.app/api/";
     private final OkHttpClient httpClient;
     private final SessionManager sessionManager;
 

@@ -69,7 +69,6 @@ public class RoundFragment extends Fragment implements RoundAdapter.OnRoundActio
 
         return view;
     }
-
     @Override
     public void onResume() {
         super.onResume();

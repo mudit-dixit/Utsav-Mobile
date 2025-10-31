@@ -43,18 +43,6 @@
             app:layout_constraintTop_toTopOf="@+id/text_rank"
             tools:text="Swift Seraphs" />
 
-        <!-- Optional: Member Count (if needed) -->
-        <TextView
-            android:id="@+id/text_member_count"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="@+id/text_team_name"
-            app:layout_constraintStart_toStartOf="@+id/text_team_name"
-            app:layout_constraintTop_toBottomOf="@+id/text_team_name"
-            android:layout_marginTop="4dp"
-            tools:text="5 Members" />
 
 
         <!-- Total Score -->

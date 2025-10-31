@@ -52,7 +52,6 @@ public class RoundAdapter extends RecyclerView.Adapter<RoundAdapter.RoundViewHol
     public void onBindViewHolder(@NonNull RoundViewHolder holder, int position) {
         Round round = roundList.get(position);
         holder.roundName.setText(round.getName());
-        holder.roundStatus.setText(round.getStatus() != null ? round.getStatus() : "Unknown");
 
         // --- Use Listener for Clicks ---
         holder.startButton.setOnClickListener(v -> {
@@ -89,7 +88,6 @@ public class RoundAdapter extends RecyclerView.Adapter<RoundAdapter.RoundViewHol
         public RoundViewHolder(View itemView) {
             super(itemView);
             roundName = itemView.findViewById(R.id.text_round_name);
-            roundStatus = itemView.findViewById(R.id.text_round_status);
             startButton = itemView.findViewById(R.id.button_start); // Corrected ID from layout
             scoreButton = itemView.findViewById(R.id.button_score);
             registerButton = itemView.findViewById(R.id.button_register);
